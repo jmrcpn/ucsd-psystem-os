@@ -9,23 +9,6 @@ BR	=	$(shell git branch | sed -e '/^[^*]/d' -e 's/* //')
 #--------------------------------------------------------------------
 PACKAGER=	Jean-Marc Pigeon	<jmp@safe.ca>
 #--------------------------------------------------------------------
-commit	:  fclean dovers togit
-	   @ git commit -a
-	   $(MAKE) -s push
-
-togit	:
-	   @ git add .
-
-push	:
-	   @ git push --tags origin $$BR:$$BR ;
-
-
-#--------------------------------------------------------------------
-#to update the github site
-github	:  
-	    @ git push --tags $@ $(BR):$(BR)
-
-#--------------------------------------------------------------------
 gitcheck:
 	   @ echo "CURTAG=\"$(CURTAG)\""
 	   @ echo "VERSION=\"$(VERSION)\""
