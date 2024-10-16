@@ -1,0 +1,50 @@
+#--------------------------------------------------------------------
+#Using git function to make version change
+CURTAG	=	$(shell git rev-parse --abbrev-ref HEAD)
+RELEASE	=	$(shell git rev-list --count $(CURTAG) ^tag-$(VERSION))
+VERSION	=	$(shell echo $(CURTAG) | cut -d'-' -f2)
+NEXTREL	=	$(shell echo $(RELEASE) + 1 |bc)
+BR	=	$(shell git branch | sed -e '/^[^*]/d' -e 's/* //')
+
+#--------------------------------------------------------------------
+PACKAGER=	Jean-Marc Pigeon	<jmp@safe.ca>
+#--------------------------------------------------------------------
+commit	:  fclean dovers togit
+	   @ git commit -a
+	   $(MAKE) -s push
+
+togit	:
+	   @ git add .
+
+push	:
+	   @ git push --tags origin $$BR:$$BR ;
+
+
+#--------------------------------------------------------------------
+#to update the github site
+github	:  
+	    @ git push --tags $@ $(BR):$(BR)
+
+#--------------------------------------------------------------------
+gitcheck:
+	   @ echo "CURTAG=\"$(CURTAG)\""
+	   @ echo "VERSION=\"$(VERSION)\""
+	   @ echo "RELEASE=\"$(RELEASE)\""
+
+#--------------------------------------------------------------------
+#to clean directory before a git commit
+fclean	:  clean
+	   @ rm -f $(APP).spec
+	   @ rm -fr srcrpm/*
+
+
+dovers	:
+	
+
+NEWGIT = $(shell git diff --exit-code > /dev/null; echo $$?)
+#--------------------------------------------------------------------
+RPMDIR	=	~/rpmbuild
+#--------------------------------------------------------------------
+APP	=  ucsd-psystem-os
+APLR	=  $(APP)-$(VERSION).$(RELEASE)
+#--------------------------------------------------------------------
