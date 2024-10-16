@@ -17,8 +17,10 @@ Source0		:	%{name}-%{version}.tar.gz
 BuildRequires	:	meson
 BuildRequires	:	libexplain-devel
 BuildRequires	:	ucsd-psystem-xc
+BuildRequires	:	ucsd-psystem-fs
 BuildRequires	:	xterm
 
+BuildArch	:	noarch
 #-----------------------------------------------------------------------------
 %description
 The ucsd-psystem-os package is composed of
@@ -28,6 +30,9 @@ the UCSD p-System operating system.
 #-----------------------------------------------------------------------------
 %files
 %defattr(-, root,root, -)
+%{_datadir}/%{name}/*.vol
+%{_mandir}/man1/ucsdpsys_os_license_bsd.1.gz
+%{_mandir}/man1/ucsdpsys_os_license_ucsd.1.gz
 
 #=============================================================================
 %prep
